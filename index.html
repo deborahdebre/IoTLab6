@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>IOT Lab 6</title>
+        <!--<link rel="stylesheet" href="style.css">-->
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+
+            body {
+                background: #bae9ff;
+                font-family: "Montserrat", sans-serif;
+            }
+
+            #topnav {
+                text-align: center;
+            }
+
+            #topnav a {
+                color: #08879d;
+                text-decoration: none;
+                font-size: 1.2em;
+                text-transform: uppercase;
+                font-weight: 500;
+                display: inline-block;
+                width: 80px;
+            }
+
+            #topnav a:hover {
+                color: #1b3a5f;
+            }
+
+            p {
+                color: #04252d;
+                font-size: 16px;
+                font-weight: 500;
+                display: inline-block;
+                text-align: center;
+
+            }
+        </style>
+        <script type="text/javascript">
+            function tank1(id,id1,id3) {
+            const xhttp = new XMLHttpRequest();
+            const xhttp2 = new XMLHttpRequest();
+            xhttp.onreadystatechange = function(){
+                const myObj = JSON.parse(this.responseText);
+                let text = "<table border =1><tr><th>LDR ID</th><th>LDR Value</th><th> LDR Time Taken</th></tr>";
+                for (let data in myObj) {
+                    text += "<tr><td>"+myObj[data].ldrID+"</td><td>"+myObj[data].ldrValue+"</td><td>"+myObj[data].timetaken+"</td></tr>";
+                }
+                text += "</table><br>" ;
+                    document.getElementById(id1).innerHTML = text;
+
+            };
+            xhttp.open("GET", "/iot/IoTLab6/iotproject.php?deviceID="+id);
+            xhttp.send();
+
+            xhttp2.onreadystatechange = function(){
+                    const myObj2 = JSON.parse(this.responseText);
+                    let text2 = "<table border =1><tr><th>Ultra ID</th><th>Ultra Value</th><th> Ultra Time Taken</th></tr>";
+                    for (let data2 in myObj2) {
+                        text2 += "<tr><td>"+myObj2[data2].ultraID+"</td><td>"+myObj2[data2].ultraVal+"</td><td>"+myObj2[data2].Utimetaken+"</td></tr>";
+                    }
+                    text2 += "</table>" ;
+                        document.getElementById(id3).innerHTML = text2;
+
+                };
+
+                xhttp2.open("GET", "/iot/IoTLab6/iotproject2.php?deviceID="+id);
+                xhttp2.send();
+            };
+
+        </script>
+    </head>
+    <body>
+            <div class="dashboard">
+                <h1>Dashboard</h1>
+                <div class="waterlevel">
+                        <p><button id = '1' onclick="tank1(id,'tank1x','tankUlt1x')">Device 1</button></p>
+                        <br>
+                        <p id="tank1x"></p>
+                        </br>
+                        <br>
+                        <p id="tankUlt1x"></p></br>
+                        <br>
+                        <p><button id = '2' onclick="tank1(id,'tank2x','tankUlt2x')">Device 2</button></p>
+                    <br>
+                    <p id="tank2x"></p>
+                    </br>
+                    <br>
+                    <p id="tankUlt2x"></p></br>
+                    <br>
+                </div>
+            </div>
+    </body>
+</html>
